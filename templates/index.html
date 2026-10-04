@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Links -->
+  <link rel="icon" href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <title>Pokédex</title>
+</head>
+<body>
+  
+  <main>
+    {% if pokemon %}
+        <img src="{{ pokemon.imagem }}" alt="{{ pokemon.nome }}" class="pokemon__image">
+        <h1 class="pokemon__data">
+            <span class="pokemon__number">{{ pokemon.id }}</span> -
+            <span class="pokemon__name">{{ pokemon.nome }}</span>
+        </h1>
+    {% else %}
+        <h1 class="pokemon__data">
+            <span class="pokemon__name">Não encontrado :c</span>
+        </h1>
+    {% endif %}
+
+    <form class="form" action="{{ url_for('index') }}" method="get">
+      <input
+        type="search"
+        name="busca"
+        class="input__search"
+        placeholder="Nome ou Número"
+        required
+      />
+    </form>
+
+    <div class="buttons">
+      <button class="button btn-prev"
+        onclick="location.href='{{ url_for('ver_pokemon', identificador=pokemon.anterior if pokemon else 1) }}'">Prev &lt;</button>
+      <button class="button btn-next"
+        onclick="location.href='{{ url_for('ver_pokemon', identificador=pokemon.proximo if pokemon else 1) }}'">Next &gt;</button>
+    </div>
+
+    <img src="{{ url_for('static', filename='img/pokedex.png') }}" alt="pokedex" class="pokedex">
+  </main>
+
+</body>
+</html>             
